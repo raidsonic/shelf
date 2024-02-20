@@ -43,10 +43,10 @@ Handler webSocketHandler(Function onConnection,
     {Iterable<String>? protocols,
     Iterable<String>? allowedOrigins,
     Duration? pingInterval}) {
-  if (onConnection is! void Function(Never, Never)) {
+  if (onConnection is! void Function(Never, Never, Never)) {
     final innerOnConnection = onConnection;
     // ignore: inference_failure_on_untyped_parameter, avoid_dynamic_calls
-    onConnection = (webSocket, _) => innerOnConnection(webSocket);
+    onConnection = (webSocket, _, httpInfo) => innerOnConnection(webSocket);
   }
 
   return WebSocketHandler(

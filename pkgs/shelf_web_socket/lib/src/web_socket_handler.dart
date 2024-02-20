@@ -1,7 +1,7 @@
 // Copyright (c) 2014, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-
+import 'dart:io';
 import 'dart:convert';
 
 import 'package:shelf/shelf.dart';
@@ -78,9 +78,11 @@ class WebSocketHandler {
       if (protocol != null) sink.add('Sec-WebSocket-Protocol: $protocol\r\n');
       sink.add('\r\n');
 
+
+	final httpInfo = request.context['shelf.io.connection_info'] as HttpConnectionInfo?;
       // ignore: avoid_dynamic_calls
       _onConnection(
-          WebSocketChannel(channel, pingInterval: _pingInterval), protocol);
+          WebSocketChannel(channel, pingInterval: _pingInterval), protocol, httpInfo);
     });
   }
 
