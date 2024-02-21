@@ -79,10 +79,9 @@ class WebSocketHandler {
       sink.add('\r\n');
 
 
-	final httpInfo = request.context['shelf.io.connection_info'] as HttpConnectionInfo?;
       // ignore: avoid_dynamic_calls
       _onConnection(
-          WebSocketChannel(channel, pingInterval: _pingInterval), protocol, httpInfo);
+          WebSocketChannel(channel, pingInterval: _pingInterval), protocol, request);
     });
   }
 

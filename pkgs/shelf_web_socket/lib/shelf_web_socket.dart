@@ -46,7 +46,7 @@ Handler webSocketHandler(Function onConnection,
   if (onConnection is! void Function(Never, Never, Never)) {
     final innerOnConnection = onConnection;
     // ignore: inference_failure_on_untyped_parameter, avoid_dynamic_calls
-    onConnection = (webSocket, _, httpInfo) => innerOnConnection(webSocket);
+    onConnection = (webSocket, _, request) => innerOnConnection(webSocket);
   }
 
   return WebSocketHandler(
