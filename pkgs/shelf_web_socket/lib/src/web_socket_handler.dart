@@ -7,6 +7,8 @@ import 'dart:convert';
 import 'package:shelf/shelf.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
+typedef CustomCheck = Response? Function();
+
 /// A class that exposes a handler for upgrading WebSocket requests.
 class WebSocketHandler {
   /// The function to call when a request is upgraded.
@@ -21,8 +23,10 @@ class WebSocketHandler {
   /// The ping interval used for verifying connection, or `null`.
   final Duration? _pingInterval;
 
+  final CustomCheck? _customCheck;
+
   WebSocketHandler(this._onConnection, this._protocols, this._allowedOrigins,
-      this._pingInterval);
+      this._pingInterval, this._customCheck);
 
   /// The [Handler].
   Response handle(Request request) {
@@ -66,6 +70,13 @@ class WebSocketHandler {
         _allowedOrigins != null &&
         !_allowedOrigins!.contains(origin.toLowerCase())) {
       return _forbidden('invalid origin "$origin".');
+    }
+
+    if(_customCheck != null) {
+      final customCheckResult = _customCheck!();
+        if(customCheckResult != null) {
+          return customCheckResult;
+        }
     }
 
     final protocol = _chooseProtocol(request);
