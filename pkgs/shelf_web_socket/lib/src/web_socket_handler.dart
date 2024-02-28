@@ -73,7 +73,7 @@ class WebSocketHandler {
     }
 
     if(_customCheck != null) {
-      final customCheckResult = _customCheck!();
+      final customCheckResult = _customCheck!(request);
         if(customCheckResult != null) {
           return customCheckResult;
         }
