@@ -7,7 +7,7 @@ import 'dart:convert';
 import 'package:shelf/shelf.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-typedef CustomCheck = Response? Function();
+typedef CustomCheck = Response? Function(Request req);
 
 /// A class that exposes a handler for upgrading WebSocket requests.
 class WebSocketHandler {
