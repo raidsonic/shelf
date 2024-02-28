@@ -42,7 +42,9 @@ import 'src/web_socket_handler.dart';
 Handler webSocketHandler(Function onConnection,
     {Iterable<String>? protocols,
     Iterable<String>? allowedOrigins,
-    Duration? pingInterval}) {
+    Duration? pingInterval,
+    CustomCheck? customCheck
+    }) {
   if (onConnection is! void Function(Never, Never, Never)) {
     final innerOnConnection = onConnection;
     // ignore: inference_failure_on_untyped_parameter, avoid_dynamic_calls
@@ -54,5 +56,6 @@ Handler webSocketHandler(Function onConnection,
     protocols?.toSet(),
     allowedOrigins?.map((origin) => origin.toLowerCase()).toSet(),
     pingInterval,
+    customCheck
   ).handle;
 }
